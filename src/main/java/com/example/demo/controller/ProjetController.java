@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Projet;
+import com.example.demo.entity.Utilisateur;
 import com.example.demo.service.ProjetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class ProjetController {
   @Autowired
   ProjetService projectService;
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Projet>> getAllProjects() {
         List<Projet> projects = projectService.getAllProjets();
         return ResponseEntity.ok(projects);
@@ -33,10 +34,7 @@ public class ProjetController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Projet> createProject(@RequestBody Projet project,Principal principal) {
-        JwtAuthenticationToken token = (JwtAuthenticationToken) principal;
-        String userName = (String) token.getTokenAttributes().get("name");
-        project.setUserName(userName);
+    public ResponseEntity<Projet> createProject(@RequestBody Projet project) {
         Projet createdProject = projectService.createProjet(project);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProject);
     }
@@ -52,4 +50,10 @@ public class ProjetController {
         projectService.deleteProjet(id);
         return ResponseEntity.noContent().build();
     }
+    @PutMapping("/{projectId}/users/{userId}")
+    public ResponseEntity<Void> assignProjectToUser(@PathVariable Long projectId, @PathVariable String userId) {
+        projectService.assignProjectToUser(projectId, userId);
+        return ResponseEntity.noContent().build();
+    }
+
 }

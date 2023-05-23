@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.enumeration.Niveau;
 import com.example.demo.enumeration.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +16,10 @@ public class Tache {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long idTache;
-    private Status status;
+    @Enumerated(EnumType.STRING)
+    private Status status=Status.unassigned;
+    @Enumerated(EnumType.ORDINAL)
+    private Niveau nivTache;
     private String nomTache;
 
     @ManyToOne

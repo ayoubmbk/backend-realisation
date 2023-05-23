@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Tache;
 import com.example.demo.entity.Utilisateur;
+import com.example.demo.enumeration.Status;
 import com.example.demo.repo.TacheRepo;
 import com.example.demo.repo.UserRepo;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,8 @@ public class TacheServiceImpl implements TacheService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
         tache.setUser(user);
+        tache.setStatus(Status.assgined); // Update the task status to ASSIGNED
+
         tacheRepository.save(tache);
     }
 }

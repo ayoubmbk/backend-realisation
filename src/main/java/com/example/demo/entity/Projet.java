@@ -2,18 +2,19 @@ package com.example.demo.entity;
 
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = "utilisateurs")
+@ToString(exclude = "utilisateurs")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Projet {
@@ -23,5 +24,52 @@ public class Projet {
     private Long numProjet;
     private Date dateCreation ;
     private  String nomProjet;
-    private String userName;
+
+    public Long getProjetId() {
+        return projetId;
+    }
+
+    public void setProjetId(Long projetId) {
+        this.projetId = projetId;
+    }
+
+    public Long getNumProjet() {
+        return numProjet;
+    }
+
+    public void setNumProjet(Long numProjet) {
+        this.numProjet = numProjet;
+    }
+
+    public Date getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(Date dateCreation) {
+        this.dateCreation = dateCreation;
+    }
+
+    public String getNomProjet() {
+        return nomProjet;
+    }
+
+    public void setNomProjet(String nomProjet) {
+        this.nomProjet = nomProjet;
+    }
+
+    public Set<Utilisateur> getUtilisateurs() {
+        return utilisateurs;
+    }
+
+    public void setUtilisateurs(Set<Utilisateur> utilisateurs) {
+        this.utilisateurs = utilisateurs;
+    }
+
+    @ManyToMany
+    @JoinTable(name = "utilisateur_projet",
+            joinColumns = @JoinColumn(name = "id_projet"),
+            inverseJoinColumns = @JoinColumn(name = "id_utilisateur"))
+    @JsonManagedReference
+    @JsonIgnore
+    private Set<Utilisateur> utilisateurs;
 }

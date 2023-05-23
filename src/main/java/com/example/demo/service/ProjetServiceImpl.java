@@ -1,12 +1,11 @@
 package com.example.demo.service;
 import com.example.demo.entity.Projet;
+import com.example.demo.entity.Utilisateur;
 import com.example.demo.repo.ProjetRepo;
-import com.example.demo.service.ProjetService;
+import com.example.demo.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +14,10 @@ public class ProjetServiceImpl implements ProjetService {
 
     @Autowired
     ProjetRepo projectRepository;
+    @Autowired
+    UserRepo userRepository;
+    @Autowired
+    private EmailSenderService emailService;
 
 
     @Override
@@ -30,6 +33,7 @@ public class ProjetServiceImpl implements ProjetService {
 
     @Override
     public Projet createProjet(Projet projet) {
+
         return projectRepository.save(projet);
     }
 
@@ -51,4 +55,23 @@ public class ProjetServiceImpl implements ProjetService {
         projectRepository.deleteById(id);
 
     }
+
+    @Override
+    public void assignProjectToUser(Long projectId, String userId) {
+        Projet projet = projectRepository.findById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException("Project not found"));
+        Utilisateur utilisateur = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        projet.getUtilisateurs().add(utilisateur);
+        utilisateur.getProjets().add(projet);
+        String projetname=projet.getNomProjet();
+        System.out.println(utilisateur.getEmail() +" eeeeeeeeeeeeeee");
+        projectRepository.save(projet);
+        userRepository.save(utilisateur);
+        emailService.sendSimpleEmail(utilisateur.getEmail(),"you have been added to a project ","Dear " + utilisateur.getUsername() + ",\n\nYou have been added to the project " + projet.getNomProjet() + ".\n\nBest regards,\nThe Project Team");
+
+
+    }
+
 }

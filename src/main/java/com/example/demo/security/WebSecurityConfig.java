@@ -31,8 +31,8 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/test/anonymous", "/test/anonymous/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/test/get", "/test/get/**").hasRole(ADMIN)
-                .antMatchers(HttpMethod.GET, "/test/user").hasAnyRole(ADMIN, USER);
+                .antMatchers(HttpMethod.POST, "/projects/add").permitAll();
+
 
         http.oauth2ResourceServer()
                 .jwt()

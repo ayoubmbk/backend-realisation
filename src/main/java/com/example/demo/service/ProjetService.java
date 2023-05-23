@@ -13,5 +13,7 @@ public interface ProjetService {
     Projet createProjet(Projet projet);
     Projet updateProjet(Long id, Projet projet);
     void deleteProjet(Long id);
-    }
+    void assignProjectToUser(Long projectId, String userId);
+
+}
 

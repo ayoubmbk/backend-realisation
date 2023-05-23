@@ -1,10 +1,12 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user_entity")
@@ -33,6 +35,34 @@ public class Utilisateur {
 
     @OneToMany(mappedBy = "user")
     private List<Tache> taches = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "utilisateurs")
+    @JsonBackReference
+    private Set<Projet> projets;
+
+    public Equipe getEquipe() {
+        return equipe;
+    }
+
+    public void setEquipe(Equipe equipe) {
+        this.equipe = equipe;
+    }
+
+    public List<Tache> getTaches() {
+        return taches;
+    }
+
+    public void setTaches(List<Tache> taches) {
+        this.taches = taches;
+    }
+
+    public Set<Projet> getProjets() {
+        return projets;
+    }
+
+    public void setProjets(Set<Projet> projets) {
+        this.projets = projets;
+    }
 
     public String getId() {
         return id;
