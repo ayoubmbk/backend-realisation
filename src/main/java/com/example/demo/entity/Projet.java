@@ -5,6 +5,7 @@ package com.example.demo.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -22,8 +23,19 @@ public class Projet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long projetId;
     private Long numProjet;
-    private Date dateCreation ;
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateCreation;
     private  String nomProjet;
+    private String descriptionProjet;
+
+    public String getDescriptionProjet() {
+        return descriptionProjet;
+    }
+
+    public void setDescriptionProjet(String descriptionProjet) {
+        this.descriptionProjet = descriptionProjet;
+    }
 
     public Long getProjetId() {
         return projetId;
