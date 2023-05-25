@@ -69,7 +69,5 @@ public class Projet {
     @JoinTable(name = "utilisateur_projet",
             joinColumns = @JoinColumn(name = "id_projet"),
             inverseJoinColumns = @JoinColumn(name = "id_utilisateur"))
-    @JsonManagedReference
-    @JsonIgnore
     private Set<Utilisateur> utilisateurs;
 }

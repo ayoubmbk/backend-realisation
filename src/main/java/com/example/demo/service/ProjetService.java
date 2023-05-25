@@ -14,6 +14,7 @@ public interface ProjetService {
     Projet updateProjet(Long id, Projet projet);
     void deleteProjet(Long id);
     void assignProjectToUser(Long projectId, String userId);
+    public List<Projet> getProjectsByUserId(String userId);
 
 }
 

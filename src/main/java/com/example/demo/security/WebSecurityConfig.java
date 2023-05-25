@@ -30,7 +30,6 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/test/anonymous", "/test/anonymous/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/projects/add").permitAll();
 
 

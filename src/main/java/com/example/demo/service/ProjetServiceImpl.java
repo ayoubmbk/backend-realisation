@@ -73,5 +73,8 @@ public class ProjetServiceImpl implements ProjetService {
 
 
     }
+    public List<Projet> getProjectsByUserId(String userId) {
+        return projectRepository.findByUtilisateurs_Id(userId);
+    }
 
 }

@@ -12,13 +12,19 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
-
 @RestController
 @RequestMapping("/projects")
 public class ProjetController {
 
   @Autowired
   ProjetService projectService;
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Projet>> getUserProjects(@PathVariable String userId) {
+        List<Projet> projects = projectService.getProjectsByUserId(userId);
+        return ResponseEntity.ok(projects);
+    }
+
 
     @GetMapping("/all")
     public ResponseEntity<List<Projet>> getAllProjects() {

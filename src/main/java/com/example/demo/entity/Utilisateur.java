@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -36,9 +37,10 @@ public class Utilisateur {
     @OneToMany(mappedBy = "user")
     private List<Tache> taches = new ArrayList<>();
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "utilisateurs")
-    @JsonBackReference
     private Set<Projet> projets;
+
 
     public Equipe getEquipe() {
         return equipe;
