@@ -58,5 +58,11 @@ public class TacheServiceImpl implements TacheService {
 
         tacheRepository.save(tache);
     }
+
+    @Override
+    public long getNombreTaches() {
+        return tacheRepository.count();
+
+    }
 }
 

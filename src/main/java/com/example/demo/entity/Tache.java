@@ -25,4 +25,9 @@ public class Tache {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Utilisateur user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "phase_id")
+    private Phase phase;
 }
+

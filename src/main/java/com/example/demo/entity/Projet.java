@@ -5,9 +5,12 @@ package com.example.demo.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,8 +25,31 @@ public class Projet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long projetId;
     private Long numProjet;
-    private Date dateCreation ;
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateCreation;
     private  String nomProjet;
+    private String descriptionProjet;
+
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    private Utilisateur createdBy;
+
+    public Utilisateur getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Utilisateur createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getDescriptionProjet() {
+        return descriptionProjet;
+    }
+
+    public void setDescriptionProjet(String descriptionProjet) {
+        this.descriptionProjet = descriptionProjet;
+    }
 
     public Long getProjetId() {
         return projetId;
@@ -70,4 +96,7 @@ public class Projet {
             joinColumns = @JoinColumn(name = "id_projet"),
             inverseJoinColumns = @JoinColumn(name = "id_utilisateur"))
     private Set<Utilisateur> utilisateurs;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Phase> phases = new ArrayList<>();
 }

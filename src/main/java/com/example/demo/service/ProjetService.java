@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Projet;
+import com.example.demo.entity.Utilisateur;
 
 import java.security.Principal;
 import java.util.List;
@@ -10,13 +11,21 @@ public interface ProjetService {
 
     List<Projet> getAllProjets();
     Optional<Projet> getProjecById(Long id);
-    Projet createProjet(Projet projet);
+    Projet createProjet(Projet projet,String Createdby);
+
+    /*Projet createProjet(Projet projet);*/
+
     Projet updateProjet(Long id, Projet projet);
     void deleteProjet(Long id);
     void assignProjectToUser(Long projectId, String userId);
     public List<Projet> getProjectsByUserId(String userId);
+
     void assignUserToProject(Long projectId, String userId);
 
+    public List<Projet> getProjectsByCreator(Utilisateur createdBy);
 
-    }
+
+
+
+}
 

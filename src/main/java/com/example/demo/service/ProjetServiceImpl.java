@@ -32,10 +32,19 @@ public class ProjetServiceImpl implements ProjetService {
     }
 
     @Override
-    public Projet createProjet(Projet projet) {
-
+    public Projet createProjet(Projet projet, String Createdby) {
+        Utilisateur utilisateur =userRepository.findById(Createdby).orElse(null);
+        projet.setCreatedBy(utilisateur);
         return projectRepository.save(projet);
     }
+
+
+
+    /*@Override
+    public Projet createProjet(Projet projet) {
+        return projectRepository.save(projet);
+
+    }*/
 
     @Override
     public Projet updateProjet(Long id, Projet project) {
@@ -85,6 +94,11 @@ public class ProjetServiceImpl implements ProjetService {
 
         projet.getUtilisateurs().add(utilisateur);
         projectRepository.save(projet);
+
+
+    }
+    public List<Projet> getProjectsByCreator(Utilisateur createdBy) {
+        return projectRepository.findByCreatedBy(createdBy);
     }
 
 }
