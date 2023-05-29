@@ -29,6 +29,18 @@ public class Projet {
     private  String nomProjet;
     private String descriptionProjet;
 
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    private Utilisateur createdBy;
+
+    public Utilisateur getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Utilisateur createdBy) {
+        this.createdBy = createdBy;
+    }
+
     public String getDescriptionProjet() {
         return descriptionProjet;
     }

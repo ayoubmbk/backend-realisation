@@ -39,10 +39,17 @@ public class ProjetController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Projet> createProject(@RequestBody Projet project) {
-        Projet createdProject = projectService.createProjet(project);
+    /*@PostMapping("/add/{createdby}")
+    public ResponseEntity<Projet> createProject(@PathVariable String createdby,@RequestBody Projet project) {
+        Projet createdProject = projectService.createProjet(createdby,project);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProject);
+    }*/
+    @PostMapping("/add/{Createdby}")
+    @ResponseBody
+    Projet addArticle(@RequestBody Projet project,@PathVariable String Createdby)
+    {
+        Projet projet =projectService.createProjet(project,Createdby);
+        return projet;
     }
 
     @PutMapping("/modifier/{id}")
@@ -60,6 +67,14 @@ public class ProjetController {
     public ResponseEntity<Void> assignProjectToUser(@PathVariable Long projectId, @PathVariable String userId) {
         projectService.assignProjectToUser(projectId, userId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/creator/{creatorId}")
+    public List<Projet> getProjectsByCreator(@PathVariable("creatorId") String creatorId) {
+        Utilisateur createdBy = new Utilisateur(); // Create an instance of Utilisateur with the given ID
+        createdBy.setId(creatorId);
+
+        return projectService.getProjectsByCreator(createdBy);
     }
 
 }
