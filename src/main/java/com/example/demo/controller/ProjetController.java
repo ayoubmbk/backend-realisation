@@ -62,4 +62,10 @@ public class ProjetController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/{projectId}/assign-user/{userId}")
+    public ResponseEntity<Void> assignUserToProject(@PathVariable Long projectId, @PathVariable String userId) {
+        projectService.assignUserToProject(projectId, userId);
+        return ResponseEntity.ok().build();
+    }
+
 }

@@ -76,5 +76,15 @@ public class ProjetServiceImpl implements ProjetService {
     public List<Projet> getProjectsByUserId(String userId) {
         return projectRepository.findByUtilisateurs_Id(userId);
     }
+    public void assignUserToProject(Long projectId, String userId) {
+        Projet projet = projectRepository.findById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException("Project not found"));
+
+        Utilisateur utilisateur = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        projet.getUtilisateurs().add(utilisateur);
+        projectRepository.save(projet);
+    }
 
 }
