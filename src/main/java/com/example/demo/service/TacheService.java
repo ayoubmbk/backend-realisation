@@ -18,6 +18,8 @@ public interface TacheService {
     void assignTacheToUser(Long tacheId, String userId);
 
     long getNombreTaches();
+    List<Tache> getTasksByProjectId(Long projectId);
+
 }
 
 

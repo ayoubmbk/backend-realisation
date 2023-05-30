@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,14 +22,13 @@ public class Phase {
     private Long id;
 
     private String nom;
-
-    // Many-to-One relationship with Project
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")
     private Projet project;
 
-    // One-to-Many relationship with Task
-    @OneToMany(mappedBy = "phase", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Tache> tasks = new ArrayList<>();
 
     // Constructors, getters, and setters

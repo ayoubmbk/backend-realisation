@@ -15,16 +15,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/taches")
 public class TacheController {
-    private final TacheService tacheService;
+
     @Autowired
     PhaseServiceImpl phaseService;
+    @Autowired TacheService tacheService;
 
 
 
 
-    public TacheController(TacheService tacheService) {
-        this.tacheService = tacheService;
-    }
 
         @PostMapping("/addTache")
     public ResponseEntity<Tache> createTache(@RequestBody Tache tache) {
@@ -91,6 +89,11 @@ public class TacheController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+    @GetMapping("/{projectId}/tasks")
+    public List<Tache> getTasksByProject(@PathVariable Long projectId) {
+        return tacheService.getTasksByProjectId(projectId);
+    }
+
     @GetMapping("/count")
     public long getNombreTaches() {
 

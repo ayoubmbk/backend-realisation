@@ -1,8 +1,11 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Phase;
+import com.example.demo.entity.Projet;
 import com.example.demo.entity.Tache;
+import com.example.demo.enumeration.Status;
 import com.example.demo.repo.PhaseRepos;
+import com.example.demo.repo.ProjetRepo;
 import com.example.demo.repo.TacheRepo;
 import javafx.concurrent.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,8 @@ public class PhaseServiceImpl implements PhaseService {
     PhaseRepos phaseRepository;
     @Autowired
     TacheRepo tacheRepository;
+    @Autowired
+    ProjetRepo projectRepository;
 
     @Override
     public List<Phase> getAllPhases() {
@@ -34,9 +39,19 @@ public class PhaseServiceImpl implements PhaseService {
                     .orElseThrow(() -> new EntityNotFoundException("Phase not found with id: " + id));
         }
     @Override
-        public Phase createPhase(Phase phase) {
-            return phaseRepository.save(phase);
+        public Phase createPhase(Phase phase,Long projectId) {
+
+            Projet project = projectRepository.findById(projectId)
+                    .orElseThrow(() -> new EntityNotFoundException("Project not found with ID: " + projectId));
+
+            phase.setProject(project);
+            Phase createdPhase = phaseRepository.save(phase);
+
+            return createdPhase;
         }
+
+
+
     @Override
         public Phase updatePhase(Long id, Phase updatedPhase) {
             Phase phase = getPhaseById(id);
@@ -77,6 +92,34 @@ public class PhaseServiceImpl implements PhaseService {
         return phaseRepository.count();
 
     }
+
+
+        @Override
+        public int calculatePhaseProgression(Long phaseId) {
+            Phase phase = getPhaseById(phaseId);
+            List<Tache> tasks = phase.getTasks();
+
+            int totalTasks = tasks.size();
+            int completedTasks = 0;
+
+            for (Tache task : tasks) {
+                if (task.getStatus() == Status.completed) {
+                    completedTasks++;
+                }
+            }
+
+            if (totalTasks == 0) {
+                return 0; // To handle division by zero error
+            }
+
+            return (completedTasks * 100) / totalTasks;
+        }
+
+    @Override
+    public int getNumberOfTasksInProject(Long projectId) {
+        return 0;
+    }
+
 
 }
 

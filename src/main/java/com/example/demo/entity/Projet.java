@@ -97,6 +97,8 @@ public class Projet {
             inverseJoinColumns = @JoinColumn(name = "id_utilisateur"))
     private Set<Utilisateur> utilisateurs;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Phase> phases = new ArrayList<>();
+
+
 }

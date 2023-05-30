@@ -30,9 +30,12 @@ public class PhaseController {
         return ResponseEntity.ok(phase);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Phase> createPhase(@RequestBody Phase phase) {
-        Phase createdPhase = phaseService.createPhase(phase);
+    @PostMapping("add/{projectId}")
+    public ResponseEntity<Phase> createPhaseAndAssignToProject(
+            @PathVariable Long projectId,
+            @RequestBody Phase phase
+    ) {
+        Phase createdPhase = phaseService.createPhase(phase, projectId);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPhase);
     }
 
@@ -53,5 +56,9 @@ public class PhaseController {
 
         Long nbr = phaseService.getNombrePhases();
         return nbr;
+    }
+    @GetMapping("/{projectId}/tasks/count")
+    public int getNumberOfTasksInProject(@PathVariable("projectId") Long projectId) {
+        return phaseService.getNumberOfTasksInProject(projectId);
     }
 }

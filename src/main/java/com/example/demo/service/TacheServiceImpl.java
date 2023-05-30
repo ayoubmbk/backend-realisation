@@ -1,10 +1,14 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Phase;
+import com.example.demo.entity.Projet;
 import com.example.demo.entity.Tache;
 import com.example.demo.entity.Utilisateur;
 import com.example.demo.enumeration.Status;
+import com.example.demo.repo.PhaseRepos;
 import com.example.demo.repo.TacheRepo;
 import com.example.demo.repo.UserRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -14,10 +18,13 @@ import java.util.List;
 public class TacheServiceImpl implements TacheService {
     private final TacheRepo tacheRepository;
     private final UserRepo userRepo;
+    @Autowired
 
+    PhaseRepos phaseRepository;
     public TacheServiceImpl(TacheRepo tacheRepository,UserRepo userRepo) {
         this.tacheRepository = tacheRepository;
         this.userRepo=userRepo;
+
     }
 
     @Override
@@ -64,5 +71,12 @@ public class TacheServiceImpl implements TacheService {
         return tacheRepository.count();
 
     }
+
+    @Override
+    public List<Tache> getTasksByProjectId(Long projectId) {
+        return null;
+    }
+
+
 }
 

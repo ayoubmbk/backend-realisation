@@ -13,7 +13,7 @@ public interface PhaseService {
 
     List<Phase> getPhasesByProjectId(Long projectId);
 
-    Phase createPhase(Phase phase);
+    Phase createPhase(Phase phase,Long projectId);
 
     Phase updatePhase(Long phaseId, Phase phase);
 
@@ -24,6 +24,9 @@ public interface PhaseService {
     void RemoveTacheFromPhase(Long phaseId, Long taskId);
 
     long getNombrePhases();
+    int calculatePhaseProgression(Long phaseId);
+    int getNumberOfTasksInProject(Long projectId) ;
+
 
 
 
