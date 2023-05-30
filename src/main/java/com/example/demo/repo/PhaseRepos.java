@@ -8,6 +8,6 @@ import java.util.List;
 @Repository
 public interface
 PhaseRepos extends JpaRepository<Phase, Long> {
-    List<Phase> findByProjectId(Long projectId);
+    List<Phase> findByProjectProjetId(Long projectId);
 
 }

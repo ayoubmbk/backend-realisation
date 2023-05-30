@@ -31,7 +31,7 @@ public class PhaseServiceImpl implements PhaseService {
 
     @Override
     public List<Phase> getPhasesByProjectId(Long projectId) {
-        return phaseRepository.findByProjectId(projectId);
+        return phaseRepository.findByProjectProjetId(projectId);
     }
 
 
