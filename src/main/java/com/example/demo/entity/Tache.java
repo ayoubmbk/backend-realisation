@@ -26,11 +26,11 @@ public class Tache {
     @JoinColumn(name = "user_id")
     private Utilisateur user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "phase_id")
     private Phase phase;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "projet_id")
     private Projet projet;
 

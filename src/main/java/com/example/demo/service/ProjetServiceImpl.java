@@ -1,5 +1,5 @@
 package com.example.demo.service;
-import com.example.demo.dto.ProjetDto;
+import com.example.demo.dto.TacheDto;
 import com.example.demo.entity.Projet;
 import com.example.demo.entity.Utilisateur;
 import com.example.demo.repo.ProjetRepo;
@@ -102,24 +102,6 @@ public class ProjetServiceImpl implements ProjetService {
     public List<Projet> getProjectsByCreator(Utilisateur createdBy) {
         return projectRepository.findByCreatedBy(createdBy);
     }
-    public List<ProjetDto> getProjectDashboardData() {
-        List<Projet> projects = projectRepository.findAll();
-        List<ProjetDto> dashboardData = new ArrayList<>();
 
-        for (Projet project : projects) {
-            int totalTasks = project.getPhases().stream().mapToInt(phase -> phase.getTasks().size()).sum();
-            int totalPhases = project.getPhases().size();
-
-            ProjetDto dto = new ProjetDto();
-            dto.setProjectId(project.getProjetId());
-            dto.setProjectName(project.getNomProjet());
-            dto.setTotalTasks(totalTasks);
-            dto.setTotalPhases(totalPhases);
-
-            dashboardData.add(dto);
-        }
-
-        return dashboardData;
-    }
 
 }

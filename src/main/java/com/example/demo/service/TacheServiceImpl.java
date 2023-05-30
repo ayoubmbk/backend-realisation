@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.TacheDto;
 import com.example.demo.entity.Phase;
 import com.example.demo.entity.Projet;
 import com.example.demo.entity.Tache;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.ws.rs.NotFoundException;
 import java.util.List;
 
 @Service
@@ -27,8 +29,20 @@ public class TacheServiceImpl implements TacheService {
 
     }
 
+
     @Override
-    public Tache createTache(Tache tache) {
+    public Tache createTacheAndAssignToPhase(Long phaseId, Tache tache) {
+        Phase phase = phaseRepository.findById(phaseId)
+                .orElseThrow(() -> new NotFoundException("Phase not found with id: " + phaseId));
+
+        Projet projet = phase.getProject();
+        System.out.println(projet +"aaaaa");
+        if (projet == null) {
+            throw new NotFoundException("Project not found for the given phase");
+        }
+
+        tache.setPhase(phase);
+        tache.setProjet(projet);
         return tacheRepository.save(tache);
     }
 
@@ -75,6 +89,16 @@ public class TacheServiceImpl implements TacheService {
     @Override
     public List<Tache> getTasksByProjectId(Long projectId) {
         return null;
+    }
+    public TacheDto convertToDto(Tache tache) {
+        TacheDto dto = new TacheDto();
+        dto.setIdTache(tache.getIdTache());
+        dto.setStatus(tache.getStatus());
+        dto.setNivTache(tache.getNivTache());
+        dto.setNomTache(tache.getNomTache());
+        dto.setPhaseId(tache.getPhase().getId());
+        dto.setProjetId(tache.getProjet().getProjetId());
+        return dto;
     }
 
 

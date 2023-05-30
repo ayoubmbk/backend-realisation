@@ -31,8 +31,10 @@ public class PhaseServiceImpl implements PhaseService {
 
     @Override
     public List<Phase> getPhasesByProjectId(Long projectId) {
-        return null;
+        return phaseRepository.findByProjectId(projectId);
     }
+
+
     @Override
     public Phase getPhaseById(Long id) {
             return phaseRepository.findById(id)

@@ -1,12 +1,12 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.TacheDto;
 import com.example.demo.entity.Tache;
 
 import java.util.List;
 
 public interface TacheService {
-    Tache createTache(Tache tache);
-
+    Tache createTacheAndAssignToPhase(Long phaseId, Tache tache);
     Tache getTacheById(Long id);
 
     List<Tache> getAllTaches();
@@ -19,6 +19,7 @@ public interface TacheService {
 
     long getNombreTaches();
     List<Tache> getTasksByProjectId(Long projectId);
+    TacheDto convertToDto(Tache tache);
 
 }
 

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.TacheDto;
 import com.example.demo.entity.Tache;
 import com.example.demo.service.PhaseService;
 import com.example.demo.service.PhaseServiceImpl;
@@ -24,10 +25,10 @@ public class TacheController {
 
 
 
-        @PostMapping("/addTache")
-    public ResponseEntity<Tache> createTache(@RequestBody Tache tache) {
-        Tache createdTache = tacheService.createTache(tache);
-        return ResponseEntity.ok(createdTache);
+    @PostMapping("add/{phaseId}")
+    public TacheDto createTacheAndAssignToPhase(@PathVariable Long phaseId, @RequestBody Tache tache) {
+        Tache createdTache = tacheService.createTacheAndAssignToPhase(phaseId, tache);
+        return tacheService.convertToDto(createdTache);
     }
 
     @GetMapping("/{id}")

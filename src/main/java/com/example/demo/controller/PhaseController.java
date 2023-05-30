@@ -61,4 +61,8 @@ public class PhaseController {
     public int getNumberOfTasksInProject(@PathVariable("projectId") Long projectId) {
         return phaseService.getNumberOfTasksInProject(projectId);
     }
+    @GetMapping
+    public List<Phase> getPhasesByProjectId(@PathVariable Long projectId) {
+        return phaseService.getPhasesByProjectId(projectId);
+    }
 }
