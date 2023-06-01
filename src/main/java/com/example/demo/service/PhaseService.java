@@ -26,10 +26,7 @@ public interface PhaseService {
     long getNombrePhases();
     int calculatePhaseProgression(Long phaseId);
     int getNumberOfTasksInProject(Long projectId) ;
+   List<Tache> getTasksByPhaseId(Long phaseId) ;
 
 
-
-
-
-
-}
+    }

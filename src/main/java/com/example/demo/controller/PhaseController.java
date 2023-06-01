@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Phase;
+import com.example.demo.entity.Tache;
 import com.example.demo.service.PhaseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,5 +65,11 @@ public class PhaseController {
     @GetMapping("/getFromProject/{projectId}")
     public List<Phase> getPhasesByProjectId(@PathVariable Long projectId) {
         return phaseService.getPhasesByProjectId(projectId);
+    }
+    @GetMapping("/{phaseId}/get")
+    public List<Tache> getTasksByPhaseId(@PathVariable Long phaseId) {
+        List<Tache> taches= phaseService.getTasksByPhaseId(phaseId);
+        return taches;
+
     }
 }

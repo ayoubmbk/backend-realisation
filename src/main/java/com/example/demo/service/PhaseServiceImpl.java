@@ -122,6 +122,14 @@ public class PhaseServiceImpl implements PhaseService {
         return 0;
     }
 
+    @Override
+    public List<Tache> getTasksByPhaseId(Long phaseId) {
+        Phase phase = phaseRepository.findById(phaseId).orElseThrow(EntityNotFoundException::new);
+
+
+        return phase.getTasks();
+    }
+
 
 }
 

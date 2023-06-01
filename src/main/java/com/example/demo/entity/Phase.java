@@ -28,7 +28,7 @@ public class Phase {
     private Projet project;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "phase")
     private List<Tache> tasks = new ArrayList<>();
 
     // Constructors, getters, and setters
