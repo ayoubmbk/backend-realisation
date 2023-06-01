@@ -86,10 +86,7 @@ public class TacheServiceImpl implements TacheService {
 
     }
 
-    @Override
-    public List<Tache> getTasksByProjectId(Long projectId) {
-        return null;
-    }
+
     public TacheDto convertToDto(Tache tache) {
         TacheDto dto = new TacheDto();
         dto.setIdTache(tache.getIdTache());
@@ -100,6 +97,12 @@ public class TacheServiceImpl implements TacheService {
         dto.setProjetId(tache.getProjet().getProjetId());
         return dto;
     }
+
+    @Override
+    public List<Tache> getTasksByProjectId(Long projectId) {
+        return tacheRepository.findTasksByProjectId(projectId);
+    }
+
 
 
 }
