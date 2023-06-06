@@ -1,7 +1,9 @@
 package com.example.demo.service;
 import com.example.demo.dto.TacheDto;
+import com.example.demo.entity.Phase;
 import com.example.demo.entity.Projet;
 import com.example.demo.entity.Utilisateur;
+import com.example.demo.enumeration.Situation;
 import com.example.demo.repo.ProjetRepo;
 import com.example.demo.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +37,7 @@ public class ProjetServiceImpl implements ProjetService {
 
     @Override
     public Projet createProjet(Projet projet, String Createdby) {
-        Utilisateur utilisateur =userRepository.findById(Createdby).orElse(null);
+        Utilisateur utilisateur = userRepository.findById(Createdby).orElse(null);
         projet.setCreatedBy(utilisateur);
         return projectRepository.save(projet);
     }
@@ -76,17 +78,19 @@ public class ProjetServiceImpl implements ProjetService {
 
         projet.getUtilisateurs().add(utilisateur);
         utilisateur.getProjets().add(projet);
-        String projetname=projet.getNomProjet();
-        System.out.println(utilisateur.getEmail() +" eeeeeeeeeeeeeee");
+        String projetname = projet.getNomProjet();
+        System.out.println(utilisateur.getEmail() + " eeeeeeeeeeeeeee");
         projectRepository.save(projet);
         userRepository.save(utilisateur);
-        emailService.sendSimpleEmail(utilisateur.getEmail(),"you have been added to a project ","Dear " + utilisateur.getUsername() + ",\n\nYou have been added to the project " + projet.getNomProjet() + ".\n\nBest regards,\nThe Project Team");
+        emailService.sendSimpleEmail(utilisateur.getEmail(), "you have been added to a project ", "Dear " + utilisateur.getUsername() + ",\n\nYou have been added to the project " + projet.getNomProjet() + ".\n\nBest regards,\nThe Project Team");
 
 
     }
+
     public List<Projet> getProjectsByUserId(String userId) {
         return projectRepository.findByUtilisateurs_Id(userId);
     }
+
     public void assignUserToProject(Long projectId, String userId) {
         Projet projet = projectRepository.findById(projectId)
                 .orElseThrow(() -> new IllegalArgumentException("Project not found"));
@@ -99,9 +103,38 @@ public class ProjetServiceImpl implements ProjetService {
 
 
     }
+
     public List<Projet> getProjectsByCreator(Utilisateur createdBy) {
         return projectRepository.findByCreatedBy(createdBy);
     }
 
+    @Override
+    public int getTaskCountForProject(Long projectId) {
+        return projectRepository.getTaskCountForProject(projectId);
+    }
 
+    @Override
+    public int getTaskCountEncoursForProject(Long projectId) {
+        Projet projet = projectRepository.findById(projectId).orElse(null);
+        if (projet == null) {
+            throw new IllegalArgumentException("Invalid project ID");
+        }
+        return projet.getPhases().stream()
+                .flatMap(phase -> phase.getTasks().stream())
+                .filter(tache -> tache.getSituation() == Situation.EnCours)
+                .toArray().length;
+
+
+    }
+
+    @Override
+    public int getPhaseCountForProject(Long projectId) {
+        Optional<Projet> projectOptional = projectRepository.findById(projectId);
+        if (projectOptional.isPresent()) {
+            Projet project = projectOptional.get();
+            List<Phase> phases = project.getPhases();
+            return phases.size();
+        }
+        return 0;
+    }
 }

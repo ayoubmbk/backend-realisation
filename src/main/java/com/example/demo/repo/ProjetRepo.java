@@ -12,6 +12,8 @@ import java.util.List;
 public interface ProjetRepo extends JpaRepository <Projet,Long>{
     List<Projet> findByUtilisateurs_Id(String userId);
     List<Projet> findByCreatedBy(Utilisateur createdBy);
+    @Query("SELECT COUNT(t) FROM Tache t WHERE t.projet.projetId = :projectId")
+    int getTaskCountForProject(Long projectId);
 
 
 

@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import com.example.demo.enumeration.Niveau;
+import com.example.demo.enumeration.Situation;
 import com.example.demo.enumeration.Status;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -22,6 +23,8 @@ public class Tache {
     private Status status=Status.unassigned;
     @Enumerated(EnumType.ORDINAL)
     private Niveau nivTache;
+    @Enumerated(EnumType.STRING)
+    private Situation situation;
     private String nomTache;
 
     @ManyToOne

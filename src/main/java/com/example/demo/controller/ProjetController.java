@@ -83,6 +83,20 @@ public class ProjetController {
 
         return projectService.getProjectsByCreator(createdBy);
     }
+    @GetMapping("/{projectId}/taskcount")
+    public int getTaskCountForProject(@PathVariable Long projectId) {
+        return projectService.getTaskCountForProject(projectId);
+    }
 
+    @GetMapping("/{projectId}/tasktEncours")
+    public ResponseEntity<Integer> getTaskTerminatedCountForProject(@PathVariable Long projectId) {
+        int taskCount = projectService.getTaskCountEncoursForProject(projectId);
+        return ResponseEntity.ok(taskCount);
+    }
+    @GetMapping("/{projectId}/phasecount")
+    public ResponseEntity<Integer> getPhaseCountForProject(@PathVariable Long projectId) {
+        int phaseCount = projectService.getPhaseCountForProject(projectId);
+        return ResponseEntity.ok(phaseCount);
+    }
 
 }
