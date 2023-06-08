@@ -26,6 +26,7 @@ public class Phase {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")
     private Projet project;
+    private double progress;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "phase")

@@ -98,5 +98,10 @@ public class ProjetController {
         int phaseCount = projectService.getPhaseCountForProject(projectId);
         return ResponseEntity.ok(phaseCount);
     }
+    @GetMapping("/{projectId}/users")
+    public ResponseEntity<List<Utilisateur>> getUsersByProjectId(@PathVariable Long projectId) {
+        List<Utilisateur> users = projectService.getUsersByProjectId(projectId);
+        return ResponseEntity.ok(users);
+    }
 
 }

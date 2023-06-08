@@ -9,9 +9,7 @@ import com.example.demo.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ProjetServiceImpl implements ProjetService {
@@ -136,5 +134,16 @@ public class ProjetServiceImpl implements ProjetService {
             return phases.size();
         }
         return 0;
+    }
+
+    @Override
+    public List<Utilisateur> getUsersByProjectId(Long projectId) {
+        Optional<Projet> projectOptional = projectRepository.findById(projectId);
+        if (projectOptional.isPresent()) {
+            Projet project = projectOptional.get();
+            Set<Utilisateur> users = project.getUtilisateurs();
+            return new ArrayList<>(users);
+        }
+        return Collections.emptyList();
     }
 }

@@ -27,6 +27,14 @@ public class Tache {
     private Situation situation;
     private String nomTache;
 
+    public Situation getSituation() {
+        return situation;
+    }
+
+    public void setSituation(Situation situation) {
+        this.situation = situation;
+    }
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Utilisateur user;

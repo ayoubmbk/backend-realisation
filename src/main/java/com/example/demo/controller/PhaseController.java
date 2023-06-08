@@ -72,4 +72,8 @@ public class PhaseController {
         return taches;
 
     }
+    @GetMapping("/{phaseId}/progress")
+    public double calculatePhaseProgress(@PathVariable Long phaseId) {
+        return phaseService.calculatePhaseProgress(phaseId);
+    }
 }
