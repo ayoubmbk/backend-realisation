@@ -1,7 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.TacheDto;
+import com.example.demo.entity.Projet;
 import com.example.demo.entity.Tache;
+import com.example.demo.entity.Utilisateur;
+import com.example.demo.enumeration.Situation;
 import com.example.demo.service.PhaseService;
 import com.example.demo.service.PhaseServiceImpl;
 import com.example.demo.service.TacheService;
@@ -19,15 +22,17 @@ public class TacheController {
 
     @Autowired
     PhaseServiceImpl phaseService;
+
     @Autowired TacheService tacheService;
 
 
 
 
 
-    @PostMapping("add/{phaseId}")
-    public TacheDto createTacheAndAssignToPhase(@PathVariable Long phaseId, @RequestBody Tache tache) {
-        Tache createdTache = tacheService.createTacheAndAssignToPhase(phaseId, tache);
+    @PostMapping("add/{phaseId}/{Createdby}")
+    public TacheDto createTacheAndAssignToPhase(@PathVariable Long phaseId, @RequestBody Tache tache,@PathVariable String Createdby) {
+        tache.setSituation(Situation.EnCours);
+        Tache createdTache = tacheService.createTacheAndAssignToPhase(phaseId, tache,Createdby);
         return tacheService.convertToDto(createdTache);
     }
 
@@ -101,6 +106,26 @@ public class TacheController {
          Long nbr=tacheService.getNombreTaches();
          return nbr;
 
+    }
+
+    @GetMapping("creator/{creatorId}")
+    public List<Tache> getTachesByCreator(@PathVariable("creatorId") String creatorId) {
+        Utilisateur createdBy = new Utilisateur(); // Create an instance of Utilisateur with the given ID
+        createdBy.setId(creatorId);
+
+        return tacheService.getTasksByCreator(createdBy);
+    }
+
+    @PutMapping("/{taskId}/status")
+    public ResponseEntity<String> updateTaskStatus(
+            @PathVariable Long taskId
+    ) {
+        boolean updated = tacheService.updateTaskStatus(taskId);
+        if (updated) {
+            return ResponseEntity.ok("Task status updated successfully.");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 
