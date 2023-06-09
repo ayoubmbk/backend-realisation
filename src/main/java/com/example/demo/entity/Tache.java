@@ -28,6 +28,13 @@ public class Tache {
     private Situation situation;
     private String nomTache;
 
+    public Situation getSituation() {
+        return situation;
+    }
+
+    public void setSituation(Situation situation) {
+        this.situation = situation;
+    }
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreation;
@@ -36,6 +43,7 @@ public class Tache {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Utilisateur user;
+
 
     @ManyToOne
     @JoinColumn(name = "created_by")

@@ -1,12 +1,7 @@
 package com.example.demo.entity;
 
-
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -96,6 +91,7 @@ public class Projet {
             joinColumns = @JoinColumn(name = "id_projet"),
             inverseJoinColumns = @JoinColumn(name = "id_utilisateur"))
     private Set<Utilisateur> utilisateurs;
+
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Phase> phases = new ArrayList<>();

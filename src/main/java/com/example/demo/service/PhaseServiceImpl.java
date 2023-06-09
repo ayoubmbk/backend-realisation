@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.entity.Phase;
 import com.example.demo.entity.Projet;
 import com.example.demo.entity.Tache;
+import com.example.demo.enumeration.Situation;
 import com.example.demo.enumeration.Status;
 import com.example.demo.repo.PhaseRepos;
 import com.example.demo.repo.ProjetRepo;
@@ -104,7 +105,7 @@ public class PhaseServiceImpl implements PhaseService {
             int completedTasks = 0;
 
             for (Tache task : tasks) {
-                if (task.getStatus() == Status.completed) {
+                if (task.getStatus() == Status.unassigned) {
                     completedTasks++;
                 }
             }
@@ -127,6 +128,25 @@ public class PhaseServiceImpl implements PhaseService {
 
 
         return phase.getTasks();
+    }
+
+    @Override
+    public double calculatePhaseProgress(Long phaseId) {
+        Phase phase = getPhaseById(phaseId);
+        int totalTasks = phase.getTasks().size();
+        int completedTasks = 0;
+
+        for (Tache task : phase.getTasks()) {
+            if (task.getSituation() == Situation.Termine) {
+                completedTasks++;
+            }
+        }
+
+        if (totalTasks > 0) {
+            return (double) completedTasks / totalTasks * 100;
+        } else {
+            return 0;
+        }
     }
 
 

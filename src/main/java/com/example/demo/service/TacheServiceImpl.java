@@ -113,6 +113,13 @@ public class TacheServiceImpl implements TacheService {
     }
 
     @Override
+    public int getNombreTachesTermineesByCreatedBy(String createdBy) {
+        Utilisateur utilisateur = userRepo.findById(createdBy).orElse(null);
+        return tacheRepository.countBySituationAndCreatedBy(Situation.Termine, utilisateur);
+    }
+
+
+    @Override
     public boolean updateTaskStatus(Long taskId) {
         Optional<Tache> optionalTask = tacheRepository.findById(taskId);
         if (optionalTask.isPresent()) {

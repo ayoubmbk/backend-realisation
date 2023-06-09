@@ -25,10 +25,9 @@ public interface ProjetService {
     public List<Projet> getProjectsByCreator(Utilisateur createdBy);
     int getTaskCountForProject(Long projectId);
    int getTaskCountEncoursForProject(Long projectId) ;
+
+    List<Utilisateur> getUsersByProjectId(Long projectId);
+
    int getPhaseCountForProject(Long projectId) ;
-
-
-
-
 }
 

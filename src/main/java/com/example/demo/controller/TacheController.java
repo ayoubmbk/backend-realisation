@@ -30,7 +30,7 @@ public class TacheController {
 
 
     @PostMapping("add/{phaseId}/{Createdby}")
-    public TacheDto createTacheAndAssignToPhase(@PathVariable Long phaseId, @RequestBody Tache tache,@PathVariable String Createdby) {
+    public TacheDto createTacheAndAssignToPhaseAndUser(@PathVariable Long phaseId, @RequestBody Tache tache,@PathVariable String Createdby) {
         tache.setSituation(Situation.EnCours);
         Tache createdTache = tacheService.createTacheAndAssignToPhase(phaseId, tache,Createdby);
         return tacheService.convertToDto(createdTache);
@@ -126,6 +126,11 @@ public class TacheController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/nb-taches-termine/{createdBy}")
+    public int getNombreTachesTermineesByCreatedBy(@PathVariable String createdBy) {
+        return tacheService.getNombreTachesTermineesByCreatedBy(createdBy);
     }
 
 

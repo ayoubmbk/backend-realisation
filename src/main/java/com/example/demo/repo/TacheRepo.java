@@ -18,6 +18,8 @@ public interface TacheRepo extends JpaRepository<Tache,Long> {
     //List<Tache> findTasksBySituationAndUser_Id(Situation situation, Long userId);
     //List<Tache> findByCreatedBy_IdOrUserId(String createdById, String userId);
     List<Tache> findByCreatedBy(Utilisateur createdBy);
+    int countByUserAndSituation(Utilisateur user, Situation situation);
+    int countBySituationAndCreatedBy(Situation situation, Utilisateur createdBy);
 }
 
 

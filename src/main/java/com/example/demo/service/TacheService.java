@@ -27,9 +27,9 @@ public interface TacheService {
     TacheDto convertToDto(Tache tache);
     List<Tache> getTasksByProjectId(Long projectId);
 
-    public List<Tache> getTasksByCreator(Utilisateur createdBy);
+     List<Tache> getTasksByCreator(Utilisateur createdBy);
 
-
+     int getNombreTachesTermineesByCreatedBy(String createdBy) ;
 
 
 }
