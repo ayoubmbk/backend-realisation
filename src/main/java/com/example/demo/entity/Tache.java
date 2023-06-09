@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -35,9 +36,19 @@ public class Tache {
         this.situation = situation;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateCreation;
+
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Utilisateur user;
+
+
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    private Utilisateur createdBy;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "phase_id")

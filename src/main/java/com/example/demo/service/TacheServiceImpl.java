@@ -5,6 +5,7 @@ import com.example.demo.entity.Phase;
 import com.example.demo.entity.Projet;
 import com.example.demo.entity.Tache;
 import com.example.demo.entity.Utilisateur;
+import com.example.demo.enumeration.Situation;
 import com.example.demo.enumeration.Status;
 import com.example.demo.repo.PhaseRepos;
 import com.example.demo.repo.TacheRepo;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import javax.ws.rs.NotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TacheServiceImpl implements TacheService {
@@ -31,9 +33,10 @@ public class TacheServiceImpl implements TacheService {
 
 
     @Override
-    public Tache createTacheAndAssignToPhase(Long phaseId, Tache tache) {
+    public Tache createTacheAndAssignToPhase(Long phaseId, Tache tache,String createdBy) {
         Phase phase = phaseRepository.findById(phaseId)
                 .orElseThrow(() -> new NotFoundException("Phase not found with id: " + phaseId));
+        Utilisateur utilisateur = userRepo.findById(createdBy).orElse(null);
 
         Projet projet = phase.getProject();
         System.out.println(projet +"aaaaa");
@@ -43,6 +46,7 @@ public class TacheServiceImpl implements TacheService {
 
         tache.setPhase(phase);
         tache.setProjet(projet);
+        tache.setCreatedBy(utilisateur);
         return tacheRepository.save(tache);
     }
 
@@ -103,6 +107,29 @@ public class TacheServiceImpl implements TacheService {
         return tacheRepository.findTasksByProjectId(projectId);
     }
 
+    @Override
+    public List<Tache> getTasksByCreator(Utilisateur createdBy) {
+        return tacheRepository.findByCreatedBy(createdBy);
+    }
+
+    @Override
+    public int getNombreTachesTermineesByCreatedBy(String createdBy) {
+        Utilisateur utilisateur = userRepo.findById(createdBy).orElse(null);
+        return tacheRepository.countBySituationAndCreatedBy(Situation.Termine, utilisateur);
+    }
+
+
+    @Override
+    public boolean updateTaskStatus(Long taskId) {
+        Optional<Tache> optionalTask = tacheRepository.findById(taskId);
+        if (optionalTask.isPresent()) {
+            Tache task = optionalTask.get();
+            task.setSituation(Situation.Termine);
+            tacheRepository.save(task);
+            return true;
+        }
+        return false;
+    }
 
 
 }
