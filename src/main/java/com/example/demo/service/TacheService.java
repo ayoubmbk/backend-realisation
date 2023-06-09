@@ -32,6 +32,13 @@ public interface TacheService {
      int getNombreTachesTermineesByCreatedBy(String createdBy) ;
 
     public Tache createTacheToCreator(String createdBy,Tache tache) ;
+    Tache createTacheAndAssignToPhaseAndProject(Long phaseId, Tache tache,String createdBy);
+    Tache assignTacheToPhase(Tache tache, Long phaseId);
+
+    Tache assignTacheToProject(Tache tache, Long projetId);
+
+
+
 
 }
 

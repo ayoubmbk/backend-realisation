@@ -138,5 +138,14 @@ public class TacheController {
         Tache addedTache = tacheService.createTacheToCreator(userId,tache);
         return ResponseEntity.status(HttpStatus.CREATED).body(addedTache);
     }
-
+    @PostMapping("/assignToPhase/{phaseId}")
+    public ResponseEntity<Tache> assignTacheToPhase(@RequestBody Tache tache, @PathVariable Long phaseId) {
+        Tache assignedTache = tacheService.assignTacheToPhase(tache, phaseId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(assignedTache);
+    }
+    @PostMapping("/assignToProjet/{projetId}")
+    public ResponseEntity<Tache> assignTacheToProjet(@RequestBody Tache tache, @PathVariable Long projetId) {
+        Tache assignedTache = tacheService.assignTacheToProject(tache, projetId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(assignedTache);
+    }
 }

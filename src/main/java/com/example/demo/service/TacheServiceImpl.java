@@ -8,6 +8,7 @@ import com.example.demo.entity.Utilisateur;
 import com.example.demo.enumeration.Situation;
 import com.example.demo.enumeration.Status;
 import com.example.demo.repo.PhaseRepos;
+import com.example.demo.repo.ProjetRepo;
 import com.example.demo.repo.TacheRepo;
 import com.example.demo.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,10 @@ public class TacheServiceImpl implements TacheService {
     @Autowired
 
     PhaseRepos phaseRepository;
+
+    @Autowired
+
+    ProjetRepo projetRepo;
     public TacheServiceImpl(TacheRepo tacheRepository,UserRepo userRepo) {
         this.tacheRepository = tacheRepository;
         this.userRepo=userRepo;
@@ -127,6 +132,25 @@ public class TacheServiceImpl implements TacheService {
         return tacheRepository.save(tache);
         }
 
+    @Override
+    public Tache createTacheAndAssignToPhaseAndProject(Long phaseId, Tache tache, String createdBy) {
+        return null;
+    }
+
+    @Override
+    public Tache assignTacheToPhase(Tache tache, Long phaseId) {
+        Phase phase = phaseRepository.findById(phaseId).orElseThrow(() -> new EntityNotFoundException("phase not found"));
+        tache.setPhase(phase);
+        return tacheRepository.save(tache);
+
+    }
+
+    @Override
+    public Tache assignTacheToProject(Tache tache, Long projetId) {
+        Projet projet = projetRepo.findById(projetId).orElseThrow(() -> new EntityNotFoundException("phase not found"));
+        tache.setProjet(projet);
+        return tacheRepository.save(tache);
+    }
 
 
     @Override
