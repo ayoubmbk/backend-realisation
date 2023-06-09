@@ -69,23 +69,7 @@ public class ProjetServiceImpl implements ProjetService {
 
     }
 
-    @Override
-    public void assignProjectToUser(Long projectId, String userId) {
-        Projet projet = projectRepository.findById(projectId)
-                .orElseThrow(() -> new IllegalArgumentException("Project not found"));
-        Utilisateur utilisateur = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        projet.getUtilisateurs().add(utilisateur);
-        utilisateur.getProjets().add(projet);
-        String projetname = projet.getNomProjet();
-        System.out.println(utilisateur.getEmail() + " eeeeeeeeeeeeeee");
-        projectRepository.save(projet);
-        userRepository.save(utilisateur);
-        emailService.sendSimpleEmail(utilisateur.getEmail(), "you have been added to a project ", "Dear " + utilisateur.getUsername() + ",\n\nYou have been added to the project " + projet.getNomProjet() + ".\n\nBest regards,\nThe Project Team");
-
-
-    }
 
     public List<Projet> getProjectsByUserId(String userId) {
         return projectRepository.findByUtilisateurs_Id(userId);
@@ -136,5 +120,20 @@ public class ProjetServiceImpl implements ProjetService {
             return phases.size();
         }
         return 0;
+    }
+
+    @Override
+    public void assignUserToProject(String userId, Long projectId) {
+        Utilisateur user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
+
+        Projet project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException("Project not found with ID: " + projectId));
+
+        project.getUtilisateurs().add(user);
+        user.getProjets().add(project);
+
+        projectRepository.save(project);
+        userRepository.save(user);
     }
 }

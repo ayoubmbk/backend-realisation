@@ -63,11 +63,11 @@ public class ProjetController {
         projectService.deleteProjet(id);
         return ResponseEntity.noContent().build();
     }
-    @PutMapping("/{projectId}/users/{userId}")
+    /*@PutMapping("/{projectId}/users/{userId}")
     public ResponseEntity<Void> assignProjectToUser(@PathVariable Long projectId, @PathVariable String userId) {
-        projectService.assignProjectToUser(projectId, userId);
-        return ResponseEntity.noContent().build();
-    }
+        projectService.assignUserToProject(projectId, userId);
+        return ResponseEntity.ok().build();
+    }*/
 
 
     @PostMapping("/{projectId}/assign-user/{userId}")

@@ -17,11 +17,11 @@ public interface ProjetService {
 
     Projet updateProjet(Long id, Projet projet);
     void deleteProjet(Long id);
-    void assignProjectToUser(Long projectId, String userId);
+    //void assignProjectToUser(Long projectId, String userId);
     public List<Projet> getProjectsByUserId(String userId);
 
     void assignUserToProject(Long projectId, String userId);
-
+    public void assignUserToProject(String userId, Long projectId);
     public List<Projet> getProjectsByCreator(Utilisateur createdBy);
     int getTaskCountForProject(Long projectId);
    int getTaskCountEncoursForProject(Long projectId) ;
