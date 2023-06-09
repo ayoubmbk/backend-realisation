@@ -118,6 +118,16 @@ public class TacheServiceImpl implements TacheService {
         return tacheRepository.countBySituationAndCreatedBy(Situation.Termine, utilisateur);
     }
 
+    @Override
+    public Tache createTacheToCreator(String createdBy,Tache tache) {
+            Utilisateur utilisateur = userRepo.findById(createdBy).orElse(null);
+            tache.setCreatedBy(utilisateur);
+            tache.setSituation(Situation.EnCours);
+
+        return tacheRepository.save(tache);
+        }
+
+
 
     @Override
     public boolean updateTaskStatus(Long taskId) {

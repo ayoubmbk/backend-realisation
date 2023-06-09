@@ -31,6 +31,7 @@ public interface TacheService {
 
      int getNombreTachesTermineesByCreatedBy(String createdBy) ;
 
+    public Tache createTacheToCreator(String createdBy,Tache tache) ;
 
 }
 

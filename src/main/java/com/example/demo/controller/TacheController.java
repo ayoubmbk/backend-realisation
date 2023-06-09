@@ -133,5 +133,10 @@ public class TacheController {
         return tacheService.getNombreTachesTermineesByCreatedBy(createdBy);
     }
 
+    @PostMapping("/addTacheToCreator/{userId}")
+    public ResponseEntity<Tache> addTacheWithUser(@RequestBody Tache tache, @PathVariable String userId) {
+        Tache addedTache = tacheService.createTacheToCreator(userId,tache);
+        return ResponseEntity.status(HttpStatus.CREATED).body(addedTache);
+    }
 
 }
