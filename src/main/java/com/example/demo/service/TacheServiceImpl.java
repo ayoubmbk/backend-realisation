@@ -152,6 +152,17 @@ public class TacheServiceImpl implements TacheService {
         return tacheRepository.save(tache);
     }
 
+    @Override
+    public Tache assignTacheToProjectandPhase(Long tacheId, Long projetId, Long phaseId) {
+        Projet projet = projetRepo.findById(projetId).orElseThrow(() -> new EntityNotFoundException("phase not found"));
+        Tache tache = tacheRepository.findById(tacheId).orElseThrow(() -> new EntityNotFoundException("phase not found"));
+        Phase phase = phaseRepository.findById(phaseId).orElseThrow(() -> new EntityNotFoundException("phase not found"));
+        tache.setProjet(projet);
+        tache.setPhase(phase);
+        return tacheRepository.save(tache);
+
+    }
+
 
     @Override
     public boolean updateTaskStatus(Long taskId) {

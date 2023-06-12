@@ -36,6 +36,7 @@ public interface TacheService {
     Tache assignTacheToPhase(Tache tache, Long phaseId);
 
     Tache assignTacheToProject(Tache tache, Long projetId);
+    Tache assignTacheToProjectandPhase(Long tacheId, Long projetId,Long phaseId);
 
 
 

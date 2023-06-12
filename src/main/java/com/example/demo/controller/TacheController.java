@@ -29,6 +29,7 @@ public class TacheController {
 
 
 
+
     @PostMapping("add/{phaseId}/{Createdby}")
     public TacheDto createTacheAndAssignToPhaseAndUser(@PathVariable Long phaseId, @RequestBody Tache tache,@PathVariable String Createdby) {
         tache.setSituation(Situation.EnCours);
@@ -147,5 +148,10 @@ public class TacheController {
     public ResponseEntity<Tache> assignTacheToProjet(@RequestBody Tache tache, @PathVariable Long projetId) {
         Tache assignedTache = tacheService.assignTacheToProject(tache, projetId);
         return ResponseEntity.status(HttpStatus.CREATED).body(assignedTache);
+    }
+    @PostMapping("/assignToProjetPhase/{tacheId}/{projetId}/{phaseId}")
+    public ResponseEntity<Tache> assignTacheToProjetandPhase(@PathVariable Long tacheId, @PathVariable Long projetId,@PathVariable Long phaseId) {
+        Tache assignedTache = tacheService.assignTacheToProjectandPhase(tacheId, projetId,phaseId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(assignedTache);
     }
 }
