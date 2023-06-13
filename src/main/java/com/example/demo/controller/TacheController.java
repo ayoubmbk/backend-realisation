@@ -159,4 +159,15 @@ public class TacheController {
     public List<Tache> getTasksAssignedtootheruser(@PathVariable String createdBy)  {
         return tacheService.getTasksCreatedByOtherUsers(createdBy);
     }
+
+    @GetMapping("/enretard/{createdById}")
+    public List<Tache> getTachesEnRetardByCreatedBy(@PathVariable String createdById) {
+        return tacheService.getTachesEnRetardByCreatedBy(createdById);
+    }
+    @GetMapping("/termine/{createdById}")
+    public List<Tache> getTachesTermineByCreatedBy(@PathVariable String createdById) {
+        return tacheService.getTachesTermineByCreatedBy(createdById);
+    }
+
+
 }

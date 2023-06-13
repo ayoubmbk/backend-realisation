@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dto.TacheDto;
 import com.example.demo.entity.Tache;
 import com.example.demo.entity.Utilisateur;
+import com.example.demo.enumeration.Situation;
 
 import java.util.List;
 
@@ -38,6 +39,12 @@ public interface TacheService {
 
     Tache assignTacheToProject(Tache tache, Long projetId);
     Tache assignTacheToProjectandPhase(Long tacheId, Long projetId,Long phaseId);
+     List<Tache> getTachesEnRetardByCreatedBy(String createdById) ;
+     List<Tache> getTachesTermineByCreatedBy(String createdById) ;
+
+
+
+
 
 
 
