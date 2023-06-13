@@ -154,4 +154,13 @@ public class TacheController {
         Tache assignedTache = tacheService.assignTacheToProjectandPhase(tacheId, projetId,phaseId);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(assignedTache);
     }
+    @GetMapping("/enretard/{createdById}")
+    public List<Tache> getTachesEnRetardByCreatedBy(@PathVariable String createdById) {
+        return tacheService.getTachesEnRetardByCreatedBy(createdById);
+    }
+    @GetMapping("/termine/{createdById}")
+    public List<Tache> getTachesTermineByCreatedBy(@PathVariable String createdById) {
+        return tacheService.getTachesTermineByCreatedBy(createdById);
+    }
+
 }

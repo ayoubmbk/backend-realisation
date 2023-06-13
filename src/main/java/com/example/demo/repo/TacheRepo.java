@@ -20,6 +20,12 @@ public interface TacheRepo extends JpaRepository<Tache,Long> {
     List<Tache> findByCreatedBy(Utilisateur createdBy);
     int countByUserAndSituation(Utilisateur user, Situation situation);
     int countBySituationAndCreatedBy(Situation situation, Utilisateur createdBy);
+    @Query("SELECT t FROM Tache t WHERE t.dateEchanche < current_timestamp AND t.situation ='EnCours' AND t.createdBy.id = :createdById")
+    List<Tache> findEnRetardByCreatedBy(@Param("createdById") String createdById);
+
+    @Query("SELECT t FROM Tache t WHERE t.situation = 'Termine' AND t.createdBy.id = :createdById")
+    List<Tache> findTermineByCreatedBy(@Param("createdById") String createdById);
+    ;
 }
 
 

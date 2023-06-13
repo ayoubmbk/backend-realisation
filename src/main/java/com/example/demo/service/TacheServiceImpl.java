@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.ws.rs.NotFoundException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -163,6 +164,15 @@ public class TacheServiceImpl implements TacheService {
 
     }
 
+    @Override
+    public List<Tache> getTachesEnRetardByCreatedBy(String createdById) {
+        return tacheRepository.findEnRetardByCreatedBy(createdById);
+    }
+
+    @Override
+    public List<Tache> getTachesTermineByCreatedBy(String createdById) {
+        return tacheRepository.findTermineByCreatedBy(createdById);
+    }
 
     @Override
     public boolean updateTaskStatus(Long taskId) {
