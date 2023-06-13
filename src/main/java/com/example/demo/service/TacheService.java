@@ -34,8 +34,10 @@ public interface TacheService {
     public Tache createTacheToCreator(String createdBy,Tache tache) ;
     Tache createTacheAndAssignToPhaseAndProject(Long phaseId, Tache tache,String createdBy);
     Tache assignTacheToPhase(Tache tache, Long phaseId);
+    List<Tache> getTasksCreatedByOtherUsers(String userId);
 
     Tache assignTacheToProject(Tache tache, Long projetId);
+    Tache assignTacheToProjectandPhase(Long tacheId, Long projetId,Long phaseId);
 
 
 
