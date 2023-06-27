@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.AssignedTacheNotif;
 import com.example.demo.dto.TacheDto;
 import com.example.demo.entity.Phase;
 import com.example.demo.entity.Projet;
@@ -11,12 +12,14 @@ import com.example.demo.repo.PhaseRepos;
 import com.example.demo.repo.ProjetRepo;
 import com.example.demo.repo.TacheRepo;
 import com.example.demo.repo.UserRepo;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.ws.rs.NotFoundException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +27,8 @@ import java.util.Optional;
 public class TacheServiceImpl implements TacheService {
     private final TacheRepo tacheRepository;
     private final UserRepo userRepo;
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
     @Autowired
 
     PhaseRepos phaseRepository;
@@ -31,9 +36,13 @@ public class TacheServiceImpl implements TacheService {
     @Autowired
 
     ProjetRepo projetRepo;
-    public TacheServiceImpl(TacheRepo tacheRepository,UserRepo userRepo) {
+    @Autowired
+    private KafkaTemplate<String, Object> kafkaTemplate;
+
+    public TacheServiceImpl(TacheRepo tacheRepository, UserRepo userRepo) {
         this.tacheRepository = tacheRepository;
         this.userRepo=userRepo;
+
 
     }
 
@@ -78,6 +87,7 @@ public class TacheServiceImpl implements TacheService {
 
     @Override
     public void assignTacheToUser(Long tacheId, String userId) {
+
         Tache tache = tacheRepository.findById(tacheId)
                 .orElseThrow(() -> new EntityNotFoundException("Tache not found"));
 
@@ -86,8 +96,19 @@ public class TacheServiceImpl implements TacheService {
 
         tache.setUser(user);
         tache.setStatus(Status.assgined); // Update the task status to ASSIGNED
-
         tacheRepository.save(tache);
+        AssignedTacheNotif dto = new AssignedTacheNotif();
+        dto.setUserId(userId);
+        dto.setTacheId(tacheId);
+        dto.setAdminId("146358d9-815e-422d-909f-8bb28d454730");
+        String value = null;
+        try {
+            value = OBJECT_MAPPER.writeValueAsString(dto);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        kafkaTemplate.send("topic-notif",value);
+
     }
 
     @Override

@@ -9,7 +9,7 @@ import org.springframework.validation.annotation.Validated;
 @Data
 @Validated
 @Configuration
-@ConfigurationProperties(prefix = "jwt.auth.converter")
+@ConfigurationProperties(prefix = "jwt.auth.converter.resource-id")
 public class JwtAuthConverterProperties {
     private String resourceId;
     private String principalAttribute;
